@@ -3,11 +3,14 @@ var generateBtn = document.querySelector("#generate");
 
 let passwordLenght  = 0;
 let includeSpecial = false;
-let includeLowercase = true;
-let includeUppercase = true;
+let includeLowercase = false;
+let includeUppercase = false;
 
 //Stores users password length
-passwordLenght = window.prompt("How long would you like to make you password?");
+passwordLenght = window.prompt("How long would you like to make you password? (8-128)");
+while(passwordLenght < 8 || passwordLenght > 128){
+  passwordLenght = window.prompt("Password not between 8 and 128 characters. Please enter a new value.");
+}
 
 //Stores if users wants special characters
 includeSpecial = window.confirm("Would you like your password to include special characters?");
@@ -17,6 +20,7 @@ includeUppercase = window.confirm("Would you like your password to include upper
 
 //Stores if users wants lowercase letters
 includeLowercase = window.confirm("Would you like your password to include lower case letters?");
+
 
 function generatePassword(passwordLenght, includeSpecial, includeLowercase, includeUppercase) 
 {
@@ -40,7 +44,6 @@ function generatePassword(passwordLenght, includeSpecial, includeLowercase, incl
   //sets password to null then generates a password based on the length given from the user
   let password = "";
   for (i = 0; i<passwordLenght; i++){
-    console.log(i);
     password += characterOptions[Math.floor(Math.random() * characterOptions.length)];
   }
   return password;
@@ -50,11 +53,12 @@ function generatePassword(passwordLenght, includeSpecial, includeLowercase, incl
 function writePassword() {
 
   //checks if any parameters were given by user and returns if not
-   if (passwordLenght != 0 || includeSpecial || includeUppercase || includeUppercase) {
+   if (includeSpecial || includeUppercase || includeUppercase) {
      wasAnythingSelected = true;
     }else{
-      window.alert("No parameters were selected");
+      window.alert("No parameters were selected. Please refresh and select at least 1 parameter this time.");
       return;
+      getInfo();
     }
   
   //if any paramters were selected generates a password and stores it in a variable
